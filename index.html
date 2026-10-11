@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0; background:#111;">
+<canvas id="c" width="500" height="900"></canvas>
+
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+// Input //
+const keys = {};
+addEventListener("keydown", e => keys[e.code] = true);
+addEventListener("keyup", e => keys[e.code] = false);
+var pressedThisFrame = true;
+
+const player = {x: 200, xl: 0, y: 100, vy: 0, vx: 0};
+const gravity = .4;
+var score = player.y;
+var highScore = null;
+
+const playerTex = new Image();
+playerTex.src = "gfx/doodler_right.png";
+
+var gameOver = false;
+
+// Game loop //
+function frame() {
+	
+	player.xl = player.x;
+	
+	// Input //
+	if(keys["ArrowLeft"] && !gameOver){
+		player.x -= 10;
+	}
+	if(keys["ArrowRight"] && !gameOver){
+		player.x += 10;
+	}
+	if(keys["ArrowUp"] && pressedThisFrame && !gameOver){ 
+		player.vy = -12.5;
+		pressedThisFrame = false;
+	}else if(!keys["ArrowUp"] && !pressedThisFrame){
+		pressedThisFrame = true;
+	}
+	if(keys["Enter"] && gameOver){
+		gameOver = false;
+		
+		if(score < highScore){
+			highScore = score;
+		}
+		
+		score = player.x;
+		
+		player.x = 200;
+		player.y = 100;
+		player.vy = 0;
+		player.vx = 0;
+	}
+	
+	// Game logic //
+	player.vx = player.xl - player.x;
+	
+	// gravity
+	player.vy += gravity;
+	if(player.vy > 15){
+		player.vy = 15;
+	}
+	player.y += player.vy;
+	
+	// Walls //
+	if(player.x >= 500){
+		player.x = -50;
+	}else if(player.x <= -50){
+		player.x = 500;
+	}
+	
+	// Floor //
+	if(player.y >= 850){
+		gameOver = true
+	}
+	
+	// score system //
+	if(score > player.y){
+		score = player.y;
+	}
+	
+	// Render //
+	ctx.fillStyle = "#1e1e28";
+	ctx.fillRect(0, 0, 500, 900);
+	
+	if(keys["ArrowUp"] && !gameOver){ 
+		playerTex.src = "gfx/doodler_shoot.png";
+	}else if(player.vx > 0){
+		playerTex.src = "gfx/doodler_left.png";
+	}else if(player.vx < 0){
+		playerTex.src = "gfx/doodler_right.png";
+	}else if(!keys["ArrowUp"] && !gameOver){ // <- has to be last
+		playerTex.src = "gfx/doodler_right.png";
+	}
+	
+	ctx.drawImage(playerTex, player.x, player.y, 124, 120);
+	
+	//Text
+	ctx.font = "48px serif";
+	ctx.fillStyle = "gray";
+	ctx.fillText(player.vy, 10, 50);
+	ctx.fillText(player.vx, 10, 100);
+	ctx.fillText(player.x, 10, 150);
+	ctx.fillText(player.y, 10, 200);
+	ctx.fillText(score * -1, 10, 250);
+	ctx.fillText(highScore * -1, 10, 300);
+	
+	if(gameOver){
+		ctx.font = "48px serif";
+		ctx.fillStyle = "red";
+		ctx.fillText("GAME OVER", 10, 350);
+		ctx.fillStyle = "gray";
+		ctx.fillText("Press Enter to restart...", 10, 400);
+	}
+	
+	requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
