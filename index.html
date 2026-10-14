@@ -25,7 +25,7 @@ playerTex.src = "gfx/doodler_right.png";
 var gameOver = false;
 
 // Collisions //
-var CheckCollision(one, two) // AABB - AABB collision
+function CheckCollision(one, two) // AABB - AABB collision
 {
     // collision x-axis?
     var collisionX = one.x + one.SizeX >= two.x &&
