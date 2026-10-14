@@ -23,6 +23,9 @@ playerTex.src = "gfx/doodler_right.png";
 
 var gameOver = false;
 
+// Collisions //
+
+	
 // Game loop //
 function frame() {
 	
@@ -108,7 +111,11 @@ function frame() {
 	ctx.fillText(player.y, 10, 200);
 	ctx.fillText(score * -1, 10, 250);
 	ctx.fillText(highScore * -1, 10, 300);
-	
+
+	if(player.x >= 100 && player.x <= 300 && player.y >= -200 && player.y <= -150){
+		ctx.fillText("Collision detected!!", 50, 140);
+	}
+
 	if(gameOver){
 		ctx.font = "48px serif";
 		ctx.fillStyle = "red";
