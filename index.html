@@ -69,6 +69,10 @@ function frame() {
 		player.vy = 15;
 	}
 	player.y += player.vy;
+
+	if(player.sizeX >= platform.x && player.x <= platform.sizeX && player.sizeY >= platform.x && player.y <= platform.sizeX){
+		player.vy = -12.5;
+	}
 	
 	// Walls //
 	if(player.x >= 500){
@@ -93,10 +97,10 @@ function frame() {
 	
 	if(keys["ArrowUp"] && !gameOver){ 
 		playerTex.src = "gfx/doodler_shoot.png";
-	}else if(player.vx > 0){
+	}else if(player.vx > 0.1){
 		playerTex.src = "gfx/doodler_left.png";
 		isFacingRight = false;
-	}else if(player.vx < 0){
+	}else if(player.vx < 0.1){
 		playerTex.src = "gfx/doodler_right.png";
 		isFacingRight = true;
 	}
