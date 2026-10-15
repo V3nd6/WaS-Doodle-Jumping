@@ -67,9 +67,6 @@ function frame() {
 	if(player.vy > 15){
 		player.vy = 15;
 	}
-	if(player.vy >= 14){
-		playerTex.src = "gfx/doodler_right_jump.png"
-	}
 	player.y += player.vy;
 	
 	// Walls //
@@ -97,9 +94,14 @@ function frame() {
 		playerTex.src = "gfx/doodler_shoot.png";
 	}else if(player.vx > 0){
 		playerTex.src = "gfx/doodler_left.png";
-	}else if(player.vx < 0){
+	}else if(player.vx < 0.1){
 		playerTex.src = "gfx/doodler_right.png";
-	}else if(!keys["ArrowUp"] && !gameOver){ // <- has to be last
+	}else if(player.vy >= 14 && player.vx > 0){
+		playerTex.src = "gfx/doodler_right_jump.png"
+	}else if(player.vy >= 14 && player.vx < 0){
+		playerTex.src = "gfx/doodler_left_jump.png"
+	}
+	else if(!keys["ArrowUp"] && !gameOver){ // <- has to be last
 		playerTex.src = "gfx/doodler_right.png";
 	}
 	
