@@ -25,7 +25,7 @@ playerTex.src = "gfx/doodler_right.png";
 var gameOver = false;
 
 // Collisions //
-function checkAABBCollision(A, B)
+function checkAABBCollision()
 {
   var AisToTheRightOfB = player.x() > platform.sizeX();
   var AisToTheLeftOfB = player.sizeX() < platform.x();
