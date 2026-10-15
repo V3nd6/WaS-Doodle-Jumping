@@ -71,7 +71,7 @@ function frame() {
 	player.y += player.vy;
 
 	if(player.sizeX >= platform.x && player.x <= platform.sizeX && player.sizeY >= platform.x && player.y <= platform.sizeX){
-		player.vy = -12.5;
+		log.console("Collision detected");
 	}
 	
 	// Walls //
