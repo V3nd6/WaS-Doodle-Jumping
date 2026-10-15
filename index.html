@@ -87,7 +87,7 @@ function frame() {
 	}
 	
 	// Render //
-	ctx.fillStyle = "#f64edc2";
+	ctx.fillStyle = "#e8f6fd";
 	ctx.fillRect(0, 0, 500, 900);
 	
 	if(keys["ArrowUp"] && !gameOver){ 
@@ -100,8 +100,7 @@ function frame() {
 		playerTex.src = "gfx/doodler_right_jump.png"
 	}else if(player.vy >= 14 && player.vx < 0){
 		playerTex.src = "gfx/doodler_left_jump.png"
-	}
-	else if(!keys["ArrowUp"] && !gameOver){ // <- has to be last
+	}else if(!keys["ArrowUp"] && !gameOver){ // <- has to be last
 		playerTex.src = "gfx/doodler_right.png";
 	}
 	
