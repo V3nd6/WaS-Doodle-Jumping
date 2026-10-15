@@ -93,14 +93,12 @@ function frame() {
 	
 	if(keys["ArrowUp"] && !gameOver){ 
 		playerTex.src = "gfx/doodler_shoot.png";
-	}else if(player.vx > 0.1){
+	}else if(player.vx > 0){
 		playerTex.src = "gfx/doodler_left.png";
 		isFacingRight = false;
-	}else if(player.vx < 0.1){
+	}else if(player.vx < 0){
 		playerTex.src = "gfx/doodler_right.png";
 		isFacingRight = true;
-	}else if(!keys["ArrowUp"] && !gameOver){ // <- has to be last
-		playerTex.src = "gfx/doodler_right.png";
 	}
 	
 	ctx.drawImage(playerTex, player.x, player.y, 124, 120);
