@@ -93,9 +93,9 @@ function frame() {
 	
 	if(keys["ArrowUp"] && !gameOver){ 
 		playerTex.src = "gfx/doodler_shoot.png";
-	}else if(player.vy >= 14 && isFacingRight){
-		playerTex.src = "gfx/doodler_right_jump.png"
 	}else if(player.vy >= 14 && !isFacingRight){
+		playerTex.src = "gfx/doodler_right_jump.png"
+	}else if(player.vy >= 14 && isFacingRight){
 		playerTex.src = "gfx/doodler_left_jump.png"
 	}else if(player.vx > 0.1){
 		playerTex.src = "gfx/doodler_left.png";
