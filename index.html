@@ -13,8 +13,8 @@ addEventListener("keydown", e => keys[e.code] = true);
 addEventListener("keyup", e => keys[e.code] = false);
 var pressedThisFrame = true;
 
-const player = {x: 200, xl: 0, y: 100, vy: 0, vx: 0, sizeX: 124, sizeY: 120};
-const platform = {x: 200, y: 100, sizeX: 124, sizeY: 120};
+var player = {x: 200, xl: 0, y: 100, vy: 0, vx: 0, sizeX: 124, sizeY: 120};
+var platform = {x: 200, y: 100, sizeX: 124, sizeY: 120};
 const gravity = .4;
 var score = player.y;
 var highScore = null;
