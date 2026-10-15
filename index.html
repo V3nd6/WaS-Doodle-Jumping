@@ -18,6 +18,7 @@ const platform = {x: 200, y: 100, sizeX: 124, sizeY: 120};
 const gravity = .4;
 var score = player.y;
 var highScore = null;
+var isFacingRight = true;
 
 const playerTex = new Image();
 playerTex.src = "gfx/doodler_right.png";
@@ -92,14 +93,16 @@ function frame() {
 	
 	if(keys["ArrowUp"] && !gameOver){ 
 		playerTex.src = "gfx/doodler_shoot.png";
-	}else if(player.vy >= 14 && player.vx > 0.1){
+	}else if(player.vy >= 14 && isFacingRight){
 		playerTex.src = "gfx/doodler_right_jump.png"
-	}else if(player.vy >= 14 && player.vx < 0.1){
+	}else if(player.vy >= 14 && !isFacingRight){
 		playerTex.src = "gfx/doodler_left_jump.png"
 	}else if(player.vx > 0.1){
 		playerTex.src = "gfx/doodler_left.png";
+		isFacingRight = false;
 	}else if(player.vx < 0.1){
 		playerTex.src = "gfx/doodler_right.png";
+		isFacingRight = true;
 	}else if(!keys["ArrowUp"] && !gameOver){ // <- has to be last
 		playerTex.src = "gfx/doodler_right.png";
 	}
