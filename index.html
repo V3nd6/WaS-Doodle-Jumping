@@ -124,7 +124,7 @@ function frame() {
 	ctx.fillText(highScore * -1, 10, 300);
 
 	if(checkAABBCollision(player, platform)){
-		ctx.fillText("Collision detected!!", 50, 140);
+		console.log("Collision detected!");
 	}
 
 	if(gameOver){
