@@ -92,7 +92,7 @@ function frame() {
 	
 	if(keys["ArrowUp"] && !gameOver){ 
 		playerTex.src = "gfx/doodler_shoot.png";
-	}else if(player.vx > 0){
+	}else if(player.vx > 0.1){
 		playerTex.src = "gfx/doodler_left.png";
 	}else if(player.vx < 0.1){
 		playerTex.src = "gfx/doodler_right.png";
