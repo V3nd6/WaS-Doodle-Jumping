@@ -13,8 +13,8 @@ addEventListener("keydown", e => keys[e.code] = true);
 addEventListener("keyup", e => keys[e.code] = false);
 var pressedThisFrame = true;
 
-var player = {x: 200, xl: 0, y: 100, vy: 0, vx: 0, sizeX: 124, sizeY: 120};
-var platform = {x: 200, y: 100, sizeX: 124, sizeY: 120};
+const player = {x: 200, xl: 0, y: 100, vy: 0, vx: 0, sizeX: 124, sizeY: 120};
+const platform = {x: 200, y: 100, sizeX: 124, sizeY: 120};
 const gravity = .4;
 var score = player.y;
 var highScore = null;
@@ -25,17 +25,6 @@ playerTex.src = "gfx/doodler_right.png";
 var gameOver = false;
 
 // Collisions //
-function checkAABBCollision()
-{
-  var AisToTheRightOfB = player.x() > platform.sizeX();
-  var AisToTheLeftOfB = player.sizeX() < platform.x();
-  var AisAboveB = player.sizeY() < platform.y();
-  var AisBelowB = player.y() > platform.sizeY();
-  return !(AisToTheRightOfB
-    || AisToTheLeftOfB
-    || AisAboveB
-    || AisBelowB);
-}
 	
 // Game loop //
 function frame() {
@@ -122,10 +111,6 @@ function frame() {
 	ctx.fillText(player.y, 10, 200);
 	ctx.fillText(score * -1, 10, 250);
 	ctx.fillText(highScore * -1, 10, 300);
-
-	if(checkAABBCollision(player, platform) = true){
-		console.log("Collision detected!");
-	}
 
 	if(gameOver){
 		ctx.font = "48px serif";
