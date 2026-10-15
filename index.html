@@ -25,16 +25,17 @@ playerTex.src = "gfx/doodler_right.png";
 var gameOver = false;
 
 // Collisions //
-function checkCollision() {
-    // collision x-axis?
-    var collisionX = player.x + player.SizeX >= platform.x &&
-        platform.x + platform.SizeX >= player.x;
-    // collision y-axis?
-    var collisionY = player.y + player.SizeY >= platform.y &&
-        platform.y + platform.SizeY >= player.y;
-    // collision only if on both axes
-    return collisionX && collisionY;
-}  
+function checkAABBCollision(A, B)
+{
+  var AisToTheRightOfB = A.x() > B.sizeX();
+  var AisToTheLeftOfB = A.sizeX() < B.x();
+  var AisAboveB = A.sizeY() < B.y();
+  var AisBelowB = A.y() > B.sizeY();
+  return !(AisToTheRightOfB
+    || AisToTheLeftOfB
+    || AisAboveB
+    || AisBelowB);
+}
 	
 // Game loop //
 function frame() {
@@ -122,7 +123,7 @@ function frame() {
 	ctx.fillText(score * -1, 10, 250);
 	ctx.fillText(highScore * -1, 10, 300);
 
-	if(checkCollision()){
+	if(checkAABBCollision(player, platform)){
 		ctx.fillText("Collision detected!!", 50, 140);
 	}
 
