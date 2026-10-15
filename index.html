@@ -25,12 +25,12 @@ playerTex.src = "gfx/doodler_right.png";
 var gameOver = false;
 
 // Collisions //
-function checkAABBCollision(const A, const B)
+function checkAABBCollision(A, B)
 {
-  var AisToTheRightOfB = A.x() > B.sizeX();
-  var AisToTheLeftOfB = A.sizeX() < B.x();
-  var AisAboveB = A.sizeY() < B.y();
-  var AisBelowB = A.y() > B.sizeY();
+  var AisToTheRightOfB = player.x() > platform.sizeX();
+  var AisToTheLeftOfB = player.sizeX() < platform.x();
+  var AisAboveB = player.sizeY() < platform.y();
+  var AisBelowB = player.y() > platform.sizeY();
   return !(AisToTheRightOfB
     || AisToTheLeftOfB
     || AisAboveB
