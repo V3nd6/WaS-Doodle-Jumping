@@ -67,6 +67,9 @@ function frame() {
 	if(player.vy > 15){
 		player.vy = 15;
 	}
+	if(player.vy >= 14){
+		playerTex.src = "gfx/doodler_right_jump.png"
+	}
 	player.y += player.vy;
 	
 	// Walls //
@@ -87,7 +90,7 @@ function frame() {
 	}
 	
 	// Render //
-	ctx.fillStyle = "#1e1e28";
+	ctx.fillStyle = "#F0F7F7";
 	ctx.fillRect(0, 0, 500, 900);
 	
 	if(keys["ArrowUp"] && !gameOver){ 
