@@ -33,6 +33,9 @@ var platform12 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY
 var platform13 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
 var platform14 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
 var platform15 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platformB1 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1, breaking: false};
+var platformB2 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1, breaking: false};
+var star = {x: platform8.x + 25, y: platform8.y - 60, sizeX: 50, sizeY: 50};
 const gravity = .4;
 var score = player.y;
 var highScore = null;
@@ -42,6 +45,10 @@ const playerTex = new Image();
 playerTex.src = "gfx/doodler_right.png";
 const platTex = new Image();
 platTex.src = "gfx/plat.png";
+const breakTex = new Image();
+breakTex.src = "gfx/platBreak.png";
+const win = new Image();
+win.src = "gfx/win.png";
 
 var gameOver = false;
 
@@ -76,7 +83,7 @@ function frame() {
 	//}else if(!keys["ArrowUp"] && !pressedThisFrame){
 	//	pressedThisFrame = true;
 	//}
-	if(keys["Enter"] && gameOver){
+	if(keys["Enter"] && star.x > 100000 || keys["Enter"] && gameOver){
 		gameOver = false;
 		
 		if(score < highScore){
@@ -97,13 +104,16 @@ function frame() {
 		platform5.x = getRandomInt(1601); platform5.y = getRandomInt(876);
 		platform6.x = getRandomInt(1601); platform6.y = getRandomInt(876);
 		platform7.x = getRandomInt(1601); platform7.y = getRandomInt(876);
-		platform8.x = getRandomInt(1601); platform1.y = getRandomInt(876);
-		platform9.x = getRandomInt(1601); platform2.y = getRandomInt(876);
-		platform10.x = getRandomInt(1601); platform3.y = getRandomInt(876);
-		platform11.x = getRandomInt(1601); platform4.y = getRandomInt(876);
-		platform12.x = getRandomInt(1601); platform5.y = getRandomInt(876);
-		platform13.x = getRandomInt(1601); platform6.y = getRandomInt(876);
-		platform14.x = getRandomInt(1601); platform7.y = getRandomInt(876);
+		platform8.x = getRandomInt(1601); platform8.y = getRandomInt(876);
+		platform9.x = getRandomInt(1601); platform9.y = getRandomInt(876);
+		platform10.x = getRandomInt(1601); platform10.y = getRandomInt(876);
+		platform11.x = getRandomInt(1601); platform11.y = getRandomInt(876);
+		platform12.x = getRandomInt(1601); platform12.y = getRandomInt(876);
+		platform13.x = getRandomInt(1601); platform13.y = getRandomInt(876);
+		platform14.x = getRandomInt(1601); platform14.y = getRandomInt(876);
+		platformB1.x = getRandomInt(1601); platformB1.y = getRandomInt(876);
+		platformB2.x = getRandomInt(1601); platformB2.y = getRandomInt(876);
+		star.x = platform8.x + 25; star.y = platform8.y - 60;
 	}
 	
 	// Game logic //
@@ -144,7 +154,21 @@ function frame() {
 		player.vy = -15;
 	}else if(isCollidingWith(platform14)){
 		player.vy = -15;
+	}else if(isCollidingWith(platformB1)){
+		platformB1.breaking = true;
+	}else if(isCollidingWith(platformB2)){
+		platformB2.breaking = true;
+	}else if(isCollidingWith(star)){
+		console.log("yayyy");
+		star.x = 500000;
 	}
+	
+	if(platformB1.breaking){
+		platformB1.y += 10;
+	}else if(platformB2.breaking){
+		platformB2.y += 10;
+	}	
+	
 	// Walls //
 	if(player.x >= 1700){
 		player.x = -50;
@@ -190,7 +214,10 @@ function frame() {
 	ctx.drawImage(platTex, platform12.x, platform12.y, platform12.sizeX, 24);
 	ctx.drawImage(platTex, platform13.x, platform13.y, platform13.sizeX, 24);
 	ctx.drawImage(platTex, platform14.x, platform14.y, platform14.sizeX, 24);
+	ctx.drawImage(breakTex, platformB1.x, platformB1.y, platformB1.sizeX, 24);
+	ctx.drawImage(breakTex, platformB2.x, platformB2.y, platformB2.sizeX, 24);
 	ctx.drawImage(playerTex, player.x, player.y, 124, 120);
+	ctx.drawImage(win, star.x, star.y, star.sizeX, star.sizeY);
 	//ctx.drawImage(platTex, player.x + 30, player.y + 80, player.sizeX - 60, player.sizeY - 80);
 	
 	//Text
@@ -207,6 +234,12 @@ function frame() {
 		ctx.font = "48px serif";
 		ctx.fillStyle = "red";
 		ctx.fillText("GAME OVER", 10, 350);
+		ctx.fillStyle = "gray";
+		ctx.fillText("Press Enter to restart...", 10, 400);
+	}else if(star.x > 100000){
+		ctx.font = "48px serif";
+		ctx.fillStyle = "green";
+		ctx.fillText("YOU WIN!!!", 10, 350);
 		ctx.fillStyle = "gray";
 		ctx.fillText("Press Enter to restart...", 10, 400);
 	}
