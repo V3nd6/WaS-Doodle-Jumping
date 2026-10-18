@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body style="margin:0; background:#111;">
-<canvas id="c" width="500" height="900"></canvas>
+<canvas id="c" width="1700" height="900"></canvas>
 
 <script>
 const canvas = document.getElementById("c");
@@ -13,8 +13,26 @@ addEventListener("keydown", e => keys[e.code] = true);
 addEventListener("keyup", e => keys[e.code] = false);
 var pressedThisFrame = true;
 
-const player = {x: 200, xl: 0, y: 100, vy: 0, vx: 0, sizeX: 124, sizeY: 120};
-const platform = {x: 200, y: 100, sizeX: 124, sizeY: 120};
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+var player = {x: 200, xl: 0, y: 100, vy: 0, vx: 0, sizeX: 124, sizeY: 120};
+var platform1 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform2 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform3 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform4 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform5 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform6 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform7 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform8 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform9 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform10 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform11 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform12 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform13 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform14 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
+var platform15 = {x: getRandomInt(1601), y: getRandomInt(876), sizeX: 100, sizeY: 1};
 const gravity = .4;
 var score = player.y;
 var highScore = null;
@@ -22,10 +40,23 @@ var isFacingRight = true;
 
 const playerTex = new Image();
 playerTex.src = "gfx/doodler_right.png";
+const platTex = new Image();
+platTex.src = "gfx/plat.png";
 
 var gameOver = false;
 
 // Collisions //
+function isCollidingWith(other) {
+
+	if(player.vy > 0){
+    return (
+      player.x <= other.x + other.sizeX &&
+      player.x + player.sizeX >= other.x &&
+      player.y + 80 <= other.y + other.sizeY &&
+      player.y + 80 + player.sizeY - 80 >= other.y
+    );
+	}
+}
 	
 // Game loop //
 function frame() {
@@ -39,12 +70,12 @@ function frame() {
 	if(keys["ArrowRight"] && !gameOver){
 		player.x += 10;
 	}
-	if(keys["ArrowUp"] && pressedThisFrame && !gameOver){ 
-		player.vy = -12.5;
-		pressedThisFrame = false;
-	}else if(!keys["ArrowUp"] && !pressedThisFrame){
-		pressedThisFrame = true;
-	}
+	//if(keys["ArrowUp"] && pressedThisFrame && !gameOver){ 
+	// 	player.vy = -12.5;
+	//	pressedThisFrame = false;	
+	//}else if(!keys["ArrowUp"] && !pressedThisFrame){
+	//	pressedThisFrame = true;
+	//}
 	if(keys["Enter"] && gameOver){
 		gameOver = false;
 		
@@ -58,6 +89,21 @@ function frame() {
 		player.y = 100;
 		player.vy = 0;
 		player.vx = 0;
+		
+		platform1.x = getRandomInt(1601); platform1.y = getRandomInt(876);
+		platform2.x = getRandomInt(1601); platform2.y = getRandomInt(876);
+		platform3.x = getRandomInt(1601); platform3.y = getRandomInt(876);
+		platform4.x = getRandomInt(1601); platform4.y = getRandomInt(876);
+		platform5.x = getRandomInt(1601); platform5.y = getRandomInt(876);
+		platform6.x = getRandomInt(1601); platform6.y = getRandomInt(876);
+		platform7.x = getRandomInt(1601); platform7.y = getRandomInt(876);
+		platform8.x = getRandomInt(1601); platform1.y = getRandomInt(876);
+		platform9.x = getRandomInt(1601); platform2.y = getRandomInt(876);
+		platform10.x = getRandomInt(1601); platform3.y = getRandomInt(876);
+		platform11.x = getRandomInt(1601); platform4.y = getRandomInt(876);
+		platform12.x = getRandomInt(1601); platform5.y = getRandomInt(876);
+		platform13.x = getRandomInt(1601); platform6.y = getRandomInt(876);
+		platform14.x = getRandomInt(1601); platform7.y = getRandomInt(876);
 	}
 	
 	// Game logic //
@@ -70,15 +116,40 @@ function frame() {
 	}
 	player.y += player.vy;
 
-	if(player.sizeX >= platform.x && player.x <= platform.sizeX && player.sizeY >= platform.x && player.y <= platform.sizeX){
-		log.console("Collision detected");
+	if(isCollidingWith(platform1)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform2)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform3)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform4)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform5)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform6)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform7)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform8)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform9)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform10)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform11)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform12)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform13)){
+		player.vy = -15;
+	}else if(isCollidingWith(platform14)){
+		player.vy = -15;
 	}
-	
 	// Walls //
-	if(player.x >= 500){
+	if(player.x >= 1700){
 		player.x = -50;
 	}else if(player.x <= -50){
-		player.x = 500;
+		player.x = 1700;
 	}
 	
 	// Floor //
@@ -93,7 +164,7 @@ function frame() {
 	
 	// Render //
 	ctx.fillStyle = "#e8f6fd";
-	ctx.fillRect(0, 0, 500, 900);
+	ctx.fillRect(0, 0, 1700, 900);
 	
 	if(keys["ArrowUp"] && !gameOver){ 
 		playerTex.src = "gfx/doodler_shoot.png";
@@ -105,17 +176,32 @@ function frame() {
 		isFacingRight = true;
 	}
 	
+	ctx.drawImage(platTex, platform1.x, platform1.y, platform1.sizeX, 24);
+	ctx.drawImage(platTex, platform2.x, platform2.y, platform2.sizeX, 24);
+	ctx.drawImage(platTex, platform3.x, platform3.y, platform3.sizeX, 24);
+	ctx.drawImage(platTex, platform4.x, platform4.y, platform4.sizeX, 24);
+	ctx.drawImage(platTex, platform5.x, platform5.y, platform5.sizeX, 24);
+	ctx.drawImage(platTex, platform6.x, platform6.y, platform6.sizeX, 24);
+	ctx.drawImage(platTex, platform7.x, platform7.y, platform7.sizeX, 24);
+	ctx.drawImage(platTex, platform8.x, platform8.y, platform8.sizeX, 24);
+	ctx.drawImage(platTex, platform9.x, platform9.y, platform9.sizeX, 24);
+	ctx.drawImage(platTex, platform10.x, platform10.y, platform10.sizeX, 24);
+	ctx.drawImage(platTex, platform11.x, platform11.y, platform11.sizeX, 24);
+	ctx.drawImage(platTex, platform12.x, platform12.y, platform12.sizeX, 24);
+	ctx.drawImage(platTex, platform13.x, platform13.y, platform13.sizeX, 24);
+	ctx.drawImage(platTex, platform14.x, platform14.y, platform14.sizeX, 24);
 	ctx.drawImage(playerTex, player.x, player.y, 124, 120);
+	//ctx.drawImage(platTex, player.x + 30, player.y + 80, player.sizeX - 60, player.sizeY - 80);
 	
 	//Text
-	ctx.font = "48px serif";
-	ctx.fillStyle = "gray";
-	ctx.fillText(player.vy, 10, 50);
-	ctx.fillText(player.vx, 10, 100);
-	ctx.fillText(player.x, 10, 150);
-	ctx.fillText(player.y, 10, 200);
-	ctx.fillText(score * -1, 10, 250);
-	ctx.fillText(highScore * -1, 10, 300);
+	//ctx.font = "48px serif";
+	//ctx.fillStyle = "gray";
+	//ctx.fillText(player.vy, 10, 50);
+	//ctx.fillText(player.vx, 10, 100);
+	//ctx.fillText(player.x, 10, 150);
+	//ctx.fillText(player.y, 10, 200);
+	//ctx.fillText(score * -1, 10, 250);
+	//ctx.fillText(highScore * -1, 10, 300);
 
 	if(gameOver){
 		ctx.font = "48px serif";
